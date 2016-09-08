@@ -10,6 +10,9 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+    exclude_fingerprints:
+        - 32b2ec86a67d47541d8a3d918562eead
+        - 5cba75fbe271dc13d75a757ad15374a4
     checks:
       CleanCode/ElseExpression:
         enabled: false
