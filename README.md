@@ -5,8 +5,31 @@ yii2-iziModal
 
 # Run
 
+### Example 1
+```html
+<button data-izimodal-open="izi-modal">Open</button>
+```
+
 ```php
-    <? IziModalWidget::widget(); ?>
+\efureev\iziModal\IziModalWidget::alert('izi-modal');
+```
+
+### Example 2
+```html
+<button id="btn-izimodal" data-izimodal-open="izi-modal">Open</button>
+```
+
+```php
+\efureev\iziModal\IziModalWidget::alert('izi-modal');
+
+$this->registerJs("
+    var ic = 0;
+    $('#btn-izimodal').on('click',function(e){
+        ic++;
+        $('#izi-modal').iziModal('setContent','no: '+ic);
+    });
+");
+
 ```
 
 

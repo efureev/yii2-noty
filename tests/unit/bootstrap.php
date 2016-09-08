@@ -9,5 +9,6 @@ require_once(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
 Yii::setAlias('@yiiunit', __DIR__);
+Yii::setAlias('@efureev/iziModal', __DIR__. '/../../src');
 
 require_once(__DIR__ . '/TestCase.php');
