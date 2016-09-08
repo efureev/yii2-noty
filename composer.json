@@ -1,0 +1,49 @@
+{
+  "name": "efureev/yii2-iziModal",
+  "description": "A Yii2 wrapper widget for the iziModal, a modal plugin with jQuery.",
+  "version": "0.1.0",
+  "keywords": [
+    "yii2",
+    "widget",
+    "extension",
+    "iziModal",
+    "modal",
+    "izi",
+    "windows",
+    "alert",
+    "confirm"
+  ],
+  "type": "yii2-extension",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "support": {
+    "issues": "https://github.com/efureev/yii2-iziModal/issues",
+    "source": "https://github.com/efureev/yii2-iziModal"
+  },
+  "authors": [
+    {
+      "name": "Feugene",
+      "email": "fureev@gmail.com",
+      "homepage": "https://github.com/efureev/yii2-iziModal"
+    }
+  ],
+  "require": {
+    "bower-asset/fe-iziModal": "~1",
+    "yiisoft/yii2": "~2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.5",
+    "codeclimate/php-test-reporter": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "efureev\\iziModal\\": "src/"
+    }
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  }
+}
