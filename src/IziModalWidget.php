@@ -24,7 +24,6 @@ class IziModalWidget extends Widget
 
     public function init()
     {
-        parent::init();
         IziModalAsset::register($this->view);
 
         if (!isset($this->options['id'])) {
