@@ -32,6 +32,86 @@ $this->registerJs("
 
 ```
 
+### Example 3
+```html
+<button id="btn-izimodal-custom">custom</button>
+<button id="btn-izimodal-alert">Alert</button>
+<button id="btn-izimodal-success">Succes</button>
+<button id="btn-izimodal-refresh">Refresh</button>
+```
+
+```php
+\efureev\iziModal\IziModalWidget::info('app-modal');
+
+$this->registerJs("
+        
+    $('#btn-izimodal-refresh').on('click',function(e){
+        app.modal.loading('loading list...');
+    });
+    
+    $('#btn-izimodal-custom').on('click',function(e){
+        app.modal.custom('Custom!', 'customizer!');
+    });
+    $('#btn-izimodal-success').on('click',function(e){
+        app.modal.success('Succes!', 'You're winner!');
+    });
+    
+    $('#btn-izimodal-alert').on('click',function(e){
+        app.modal.alert('Alert text', 'Alert');
+    });
+");
+
+```
+
+### Example 4
+```html
+<button id="btn-izimodal-custom">custom</button>
+<button id="btn-izimodal-alert">Alert</button>
+<button id="btn-izimodal-success">Succes</button>
+<button id="btn-izimodal-info">Info</button>
+<button id="btn-izimodal-refresh">Refresh</button>
+```
+
+```php
+\efureev\iziModal\IziModalWidget::info('app-modal', [
+    'typesOptions' => [
+        'alert' => [
+            'title' => 'Оспасносте!',
+        ],
+        'info' => [
+            'icon' => null,
+        ],
+        'success' => [
+            'color' => 'rgb(136, 200, 200)',
+        ],
+    ]
+]);
+
+$this->registerJs("
+        
+    $('#btn-izimodal-refresh').on('click',function(e){
+        app.modal.loading('loading list...');
+    });
+    
+    $('#btn-izimodal-info').on('click',function(e){
+        app.modal.info('Custom!');
+    });
+
+    $('#btn-izimodal-custom').on('click',function(e){
+        app.modal.custom('Custom!', 'customizer!');
+    });
+    
+    $('#btn-izimodal-success').on('click',function(e){
+        app.modal.success('Succes!', 'You\\'re winner!');
+    });
+    
+    $('#btn-izimodal-alert').on('click',function(e){
+        app.modal.alert('Alert text', 'Alert');
+    });
+");
+
+```
+
 
 # Tests
 

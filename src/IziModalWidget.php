@@ -27,6 +27,8 @@ class IziModalWidget extends Widget
 
     public $clientOptions = [];
 
+    public $appOptions = [];
+
     public function init()
     {
         AppModalAsset::register($this->view);
@@ -44,11 +46,14 @@ class IziModalWidget extends Widget
     public function registerScript()
     {
         $clientOptions = empty($this->clientOptions) ? '' : Json::encode($this->clientOptions);
-        $js = "$('#{$this->options["id"]}').iziModal({$clientOptions});";
-        $this->view->registerJs($js);
+        $appOptions = Json::encode($this->appOptions);
+
+        $js[] = "$('#{$this->options["id"]}').iziModal({$clientOptions});";
+        $js[] = "app.modal.init('" . $this->options["id"] . "'," . $appOptions . ");";
+        $this->view->registerJs(implode(PHP_EOL, $js));
     }
 
-    public static function set($id = null, $options = [])
+    public static function set($id = null, $options = [], $appOptions = [])
     {
         $clientOptions = self::getDefaultOptions();
 
@@ -57,7 +62,8 @@ class IziModalWidget extends Widget
         $izi = self::begin(
             [
                 'options'       => ['id' => $id],
-                'clientOptions' => $options
+                'clientOptions' => $options,
+                'appOptions'    => $appOptions
             ]);
 
         echo self::getHtml($izi->options['id']);
@@ -69,12 +75,11 @@ class IziModalWidget extends Widget
     public static function alert($id = null)
     {
         self::set($id, [
-            'title'              => 'Alert!',
-            'icon'               => 'alert',
-            'headerColor'        => 'rgb(189, 91, 91)',
-            'timeout'            => 5000,
-            'timeoutProgressbar' => false,
-            'attached'           => null,
+            'title'       => 'Alert!',
+            'icon'        => 'exclamation-triangle',
+            'headerColor' => 'rgb(189, 91, 91)',
+            'timeout'     => false,
+            'attached'    => null,
         ]);
     }
 
@@ -86,6 +91,17 @@ class IziModalWidget extends Widget
             'headerColor' => 'rgb(0, 175, 102)',
             'timeout'     => 2000,
         ]);
+    }
+
+    public static function info($id = null, $appOptions = [])
+    {
+        self::set($id, [
+            'title'       => 'Info',
+            'icon'        => 'info',
+            'headerColor' => 'rgb(136, 160, 185)',
+            'timeout'     => false,
+            'attached'    => null
+        ], $appOptions);
     }
 
 
