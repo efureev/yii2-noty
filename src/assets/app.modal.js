@@ -79,6 +79,12 @@ var app = app || {};
                 return this;
             },
 
+            setContent     = function (content) {
+                if (content)
+                    this.get().iziModal('setContent', content);
+                return this;
+            },
+
             setIcon        = function (icon) {
                 if (!icon)
                     icon = null;
@@ -123,13 +129,14 @@ var app = app || {};
                 this.custom(title ? title : options.loading.title, msg, options.loading.icon, POSITION_CENTER, options.loading.color)
             },
 
-            custom         = function (title, msg, icon, position, headerColor) {
+            custom         = function (title, msg, icon, position, headerColor, content) {
                 this
                     .setTitle(title)
                     .setSubTitle(msg)
                     .setIcon(icon)
                     .setAttached(position)
                     .setHeaderColor(headerColor)
+                    .setContent(content)
                     .show();
             };
 
@@ -142,6 +149,7 @@ var app = app || {};
             loading       : loading,
             custom        : custom,
             setIcon       : setIcon,
+            setContent    : setContent,
             setTitle      : setTitle,
             setSubTitle   : setSubTitle,
             setAttached   : setAttached,
