@@ -46,7 +46,7 @@ class IziModalWidget extends Widget
     public function registerScript()
     {
         $clientOptions = empty($this->clientOptions) ? '' : Json::encode($this->clientOptions);
-        $appOptions = Json::encode($this->appOptions);
+        $appOptions = empty($this->appOptions) ? '{}': Json::encode($this->appOptions);
 
         $js[] = "$('#{$this->options["id"]}').iziModal({$clientOptions});";
         $js[] = "app.modal.init('" . $this->options["id"] . "'," . $appOptions . ");";
