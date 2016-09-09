@@ -7,6 +7,8 @@ _Wrapper for [https://github.com/efureev/iziModal](https://github.com/efureev/iz
 
 ![capa](http://i.imgur.com/TPdnES8.png)
 
+![2016-09-09_17-15-59](https://cloud.githubusercontent.com/assets/5524684/18386573/b47698a6-76b9-11e6-8cce-7bad8d7ba7b0.png)
+
 
 # Run
 
