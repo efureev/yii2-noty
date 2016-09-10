@@ -175,6 +175,14 @@ var app = app || {};
                 this.get().iziModal('open');
             },
 
+            close          = function () {
+                this.get().iziModal('close');
+            },
+
+            toggle          = function () {
+                this.get().iziModal('toggle');
+            },
+
             normalizeTitle = function (val) {
                 if (typeof(val) === 'string') {
                     val = {
@@ -227,7 +235,7 @@ var app = app || {};
                     .setSubTitle(properties.msg)
                     .setIcon(properties.icon)
                     .setAttached(properties.position)
-                    .setHeaderColor(properties.headerColor)
+                    .setHeaderColor(properties.color)
                     .setContent(properties.content)
                     .setFooter(properties.footer)
 
@@ -252,7 +260,9 @@ var app = app || {};
             setAttached   : setAttached,
             setEvents     : setEvents,
             setHeaderColor: setHeaderColor,
-            show          : show
+            show          : show,
+            close         : close,
+            toggle        : toggle
         }
     })($);
     app.modal = app.modal || $modal;

@@ -5,12 +5,203 @@ yii2-iziModal
 
 _Wrapper for [https://github.com/efureev/iziModal](https://github.com/efureev/iziModal)_
 
+[new]: http://i.imgur.com/41zuVDk.png "New label"
+[bug]: http://i.imgur.com/92lu4ln.png "Bug label"
+
 ![capa](http://i.imgur.com/TPdnES8.png)
 
 ![2016-09-09_17-15-59](https://cloud.githubusercontent.com/assets/5524684/18386573/b47698a6-76b9-11e6-8cce-7bad8d7ba7b0.png)
 
+___
+### Install
 
-# Run
+Either run
+```
+composer require "efureev/yii2-izimodal: *"
+```
+
+or add
+
+```
+"efureev/yii2-fontawesome": "~2",
+```
+
+to the require section of your composer.json file.
+
+___
+### Methods
+
+- **init** - Initialization iziModal to the element with options
+```javascript
+// @var string element : id of the element
+// @var object|null options : global options
+var options = {};
+app.modal.init('element',options);
+```
+
+- **setTitle** - Set a title to modal
+```javascript
+// @var string
+app.modal.setTitle('Custom Title');
+```
+
+- **setContent** - Set a html content to modal
+```javascript
+// @var string
+app.modal.setContent('<p>Custom</p>');
+```
+
+- **setSubTitle** - Set a subTitle to modal
+```javascript
+// @var string
+app.modal.setSubTitle('subTitle');
+```
+
+- **setIcon** - Set a icon to title
+```javascript
+// @var string
+app.modal.setIcon('fa fa-check');
+```
+
+- **setHeaderColor** - Set the background header
+```javascript
+// @var string
+app.modal.setHeaderColor('rgb(136, 160, 185)');
+```
+
+- **setAttached** - Set modal position: `bottom`|`top`|`center`
+```javascript
+// @var string: top => 'top', bottom => 'bottom', center => null
+app.modal.setAttached('top');
+```
+
+- **setEvents** - Set events
+```javascript
+// @var object
+app.modal.setEvents({
+    opening: function (event) {
+        app.task.data.getStatus().then(function () {
+
+            var template = function (item) {
+                return item.text = item.fullTitle;
+            };
+
+            inputCodes.select2({
+                data             : app.task.data.taskList(),
+                templateResult   : template,
+                templateSelection: template
+            });
+
+        });
+    }
+});
+```
+#### Events list:
+
+- Opening
+- Opened
+- Closing
+- Closed
+- Fullscreen
+
+
+- **setFooter** - Set footer content
+```javascript
+// @var object|string
+app.modal.setFooter('<button>Save me</button>');
+```
+
+```
+app.modal.setFooter({
+    opening: function (event) {
+        console.log(event);
+    }
+});
+```
+
+- **show** - Opens the modal window
+```javascript
+app.modal.show();
+```
+
+- **close** - Closes the modal window
+```javascript
+app.modal.close();
+```
+
+- **toggle** - Change to the opposite of the current state
+```javascript
+app.modal.toggle();
+```
+
+- **alert** - show the alert window
+```javascript
+// @var string|object
+app.modal.alert('Alarma!...');
+```
+
+```
+app.modal.alert({
+    title   : 'Alert',
+    msg   : 'Alarma!...',
+    icon    : 'fa fa-exclamation-triangle',
+    color   : 'rgb(189, 91, 91)',
+    position: null
+});
+```
+
+- **success** - show the success window
+```javascript
+// @var string|object
+app.modal.success('Custom message');
+```
+
+```
+app.modal.success({
+    title   : 'Success',
+    position: 'top',
+    msg: 'Custom message',
+});
+```
+
+- **loading** - show the loading window
+```javascript
+// @var string|object
+app.modal.loading('Loading users...');
+```
+
+```
+app.modal.loading({
+    position: null,
+    msg: 'Loading users...',
+});
+```
+
+- **custom** - show the custom window
+```javascript
+// @var string|object
+app.modal.custom('Loading users...');
+```
+
+```
+app.modal.custom({
+    title   : 'Alert',
+    msg   : 'Alarma!...',
+    icon    : 'fa fa-exclamation-triangle',
+    color   : 'rgb(189, 91, 91)',
+    position: null,
+    content: '<p>Content</p>',
+    footer: '<button>Save Me!</button>',
+    events: {
+        opening: function (event) {
+            console.log(event);
+        }
+    },
+});
+```
+
+___
+### Run
 
 ### Example 1
 ```html
@@ -119,15 +310,7 @@ $this->registerJs("
 
 ```
 
-## Events
-
-- Opening
-- Opened
-- Closing
-- Closed
-- Fullscreen
-
-### Example 5
+### Example 5: Events
 ```html
 <button id="btn-izimodal-custom" title="Title Test">click</button>
 ```
