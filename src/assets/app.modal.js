@@ -21,28 +21,36 @@ var app = app || {};
                     title   : 'Alert',
                     icon    : 'fa fa-exclamation-triangle',
                     color   : 'rgb(189, 91, 91)',
-                    position: POSITION_CENTER
+                    position: POSITION_CENTER,
+                    footer: null,
+                    content: null
                 },
 
                 info: {
                     title   : 'Information',
                     icon    : 'fa fa-info',
                     color   : 'rgb(136, 160, 185)',
-                    position: POSITION_BOTTON
+                    position: POSITION_BOTTON,
+                    footer: null,
+                    content: null
                 },
 
                 success: {
                     title   : 'Success',
                     icon    : 'fa fa-check',
                     color   : 'rgb(0, 175, 102)',
-                    position: POSITION_BOTTON
+                    position: POSITION_BOTTON,
+                    footer: null,
+                    content: null
                 },
 
                 loading: {
                     title   : 'Loading',
                     icon    : 'fa fa-refresh fa-spin',
                     color   : 'rgb(136, 160, 185)',
-                    position: POSITION_BOTTON
+                    position: POSITION_BOTTON,
+                    footer: null,
+                    content: null
                 }
             };
 
@@ -87,9 +95,10 @@ var app = app || {};
             },
 
             setContent     = function (content) {
-                if (content) {
-                    this.get().iziModal('setContent', content);
-                }
+                if (!content)
+                    content = '';
+
+                this.get().iziModal('setContent', content);
                 return this;
             },
 
@@ -131,6 +140,8 @@ var app = app || {};
             },
 
             setFooter      = function (footerObj) {
+                if (footerObj == null)
+                    return this;
                 var footer = _getContentEl().find('> .' + styles.footerCls);
 
                 if (!footer.length) {
@@ -192,37 +203,39 @@ var app = app || {};
                 return val;
             },
 
-            configureType  = function (type, val) {
+            resetType  = function (type, val) {
                 val.title = val.title ? val.title : options[type].title;
                 val.icon = val.icon ? val.icon : options[type].icon;
                 val.color = val.color ? val.color : options[type].color;
                 val.position = val.position ? val.position : POSITION_CENTER;
+                val.content = val.content ? val.content : null;
+                val.footer = val.footer ? val.footer : null;
 
-                this.custom(val);
+                return val;
             },
 
             alert          = function (val) {
                 val = normalizeTitle(val);
                 val.position = val.position ? val.position : POSITION_CENTER;
-                this.custom(configureType('alert', val));
+                this.custom(resetType('alert', val));
             },
 
             success        = function (val) {
                 val = normalizeTitle(val);
                 val.position = val.position ? val.position : POSITION_BOTTON;
-                this.custom(configureType('success', val));
+                this.custom(resetType('success', val));
             },
 
             info           = function (val) {
                 val = normalizeTitle(val);
                 val.position = val.position ? val.position : POSITION_BOTTON;
-                this.custom(configureType('info', val));
+                this.custom(resetType('info', val));
             },
 
             loading        = function (val) {
                 val = normalizeTitle(val);
                 val.position = val.position ? val.position : POSITION_CENTER;
-                this.custom(configureType('loading', val));
+                this.custom(resetType('loading', val));
             },
 
             custom         = function (properties) {
