@@ -89,8 +89,7 @@ var app = app || {};
             },
 
             setSubTitle    = function (title) {
-                if (title)
-                    this.get().iziModal('setSubtitle', title);
+                this.get().iziModal('setSubtitle', title);
                 return this;
             },
 
@@ -184,14 +183,17 @@ var app = app || {};
 
             show           = function () {
                 this.get().iziModal('open');
+                return this;
             },
 
             close          = function () {
                 this.get().iziModal('close');
+                return this;
             },
 
             toggle          = function () {
                 this.get().iziModal('toggle');
+                return this;
             },
 
             normalizeTitle = function (val) {
@@ -217,25 +219,25 @@ var app = app || {};
             alert          = function (val) {
                 val = normalizeTitle(val);
                 val.position = val.position ? val.position : POSITION_CENTER;
-                this.custom(resetType('alert', val));
+                return this.custom(resetType('alert', val));
             },
 
             success        = function (val) {
                 val = normalizeTitle(val);
                 val.position = val.position ? val.position : POSITION_BOTTON;
-                this.custom(resetType('success', val));
+                return this.custom(resetType('success', val));
             },
 
             info           = function (val) {
                 val = normalizeTitle(val);
                 val.position = val.position ? val.position : POSITION_BOTTON;
-                this.custom(resetType('info', val));
+                return this.custom(resetType('info', val));
             },
 
             loading        = function (val) {
                 val = normalizeTitle(val);
                 val.position = val.position ? val.position : POSITION_CENTER;
-                this.custom(resetType('loading', val));
+                return this.custom(resetType('loading', val));
             },
 
             custom         = function (properties) {
@@ -243,7 +245,7 @@ var app = app || {};
                 if (typeof(properties) !== 'object')
                     throw new Error('value "' + properties + '" must be a Object!: {title:"' + properties + '"}');
 
-                this
+                return this
                     .setTitle(properties.title)
                     .setSubTitle(properties.msg)
                     .setIcon(properties.icon)
@@ -251,7 +253,6 @@ var app = app || {};
                     .setHeaderColor(properties.color)
                     .setContent(properties.content)
                     .setFooter(properties.footer)
-
                     .setEvents(properties.events)
 
                     .show();
