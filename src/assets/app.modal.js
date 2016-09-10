@@ -6,9 +6,15 @@ var app = app || {};
     var $modal = (function ($) {
 
         var
+            doc                 = $(document),
+
             POSITION_TOP        = 'top',
             POSITION_BOTTON     = 'bottom',
             POSITION_CENTER     = null,
+
+            styles              = {
+                footerCls: 'iziModal-footer'
+            },
 
             defaultTypesOptions = {
                 alert: {
@@ -41,6 +47,7 @@ var app = app || {};
             };
 
         var _win,
+            _contentEl,
             options        = {},
             init           = function (el, opts) {
                 el = $('#' + el);
@@ -80,8 +87,9 @@ var app = app || {};
             },
 
             setContent     = function (content) {
-                if (content)
+                if (content) {
                     this.get().iziModal('setContent', content);
+                }
                 return this;
             },
 
@@ -109,34 +117,122 @@ var app = app || {};
                 return this;
             },
 
+            setEvents      = function (events) {
+                for (var name in events) {
+                    doc.on(name, this.get(), events[name]);
+                }
+                return this;
+            },
+
+            _getContentEl  = function () {
+                if (_contentEl == undefined)
+                    _contentEl = getEl().find('.iziModal-content');
+                return _contentEl;
+            },
+
+            setFooter      = function (footerObj) {
+                var footer = _getContentEl().find('> .' + styles.footerCls);
+
+                if (!footer.length) {
+                    footer = $('<div class="' + styles.footerCls + '">').css('padding', '10px 30px');
+
+                    if (footerObj.border)
+                        footer.css({'border-top': '1px solid ' + options.info.color});
+
+                    _getContentEl().append(footer);
+                }
+
+                if (typeof (footerObj) === 'string') {
+                    footer.html(footerObj);
+                    return this;
+                }
+
+                if (Array.isArray(footerObj.items) && footerObj.items.length) {
+                    footer.empty();
+                    footerObj.items.forEach(function (b) {
+                        var btn = $('<' + b.tag + '>').addClass(b.class).text(b.title);
+
+                        if (typeof(b.onClick) === 'function') {
+                            btn.click(b.onClick);
+                        }
+
+                        if (typeof(b.data) === 'object') {
+                            Object.keys(b.data).forEach(function (d) {
+                                btn.attr('data-' + d, b.data[d]);
+                            });
+                        }
+
+                        footer.append(btn);
+                    });
+                } else {
+                    footer.remove();
+                }
+
+                return this;
+            },
+
             show           = function () {
                 this.get().iziModal('open');
             },
 
-            alert          = function (msg, title) {
-                this.custom(title ? title : options.alert.title, msg, options.alert.icon, POSITION_CENTER, options.alert.color)
+            normalizeTitle = function (val) {
+                if (typeof(val) === 'string') {
+                    val = {
+                        msg: val
+                    };
+                }
+                return val;
             },
 
-            success        = function (msg, title) {
-                this.custom(title ? title : options.success.title, msg, options.success.icon, POSITION_BOTTON, options.success.color)
+            configureType  = function (type, val) {
+                val.title = val.title ? val.title : options[type].title;
+                val.icon = val.icon ? val.icon : options[type].icon;
+                val.color = val.color ? val.color : options[type].color;
+                val.position = val.position ? val.position : POSITION_CENTER;
+
+                this.custom(val);
             },
 
-            info           = function (msg, title) {
-                this.custom(title ? title : options.info.title, msg, options.info.icon, POSITION_BOTTON, options.info.color)
+            alert          = function (val) {
+                val = normalizeTitle(val);
+                val.position = val.position ? val.position : POSITION_CENTER;
+                this.custom(configureType('alert', val));
             },
 
-            loading        = function (msg, title) {
-                this.custom(title ? title : options.loading.title, msg, options.loading.icon, POSITION_CENTER, options.loading.color)
+            success        = function (val) {
+                val = normalizeTitle(val);
+                val.position = val.position ? val.position : POSITION_BOTTON;
+                this.custom(configureType('success', val));
             },
 
-            custom         = function (title, msg, icon, position, headerColor, content) {
+            info           = function (val) {
+                val = normalizeTitle(val);
+                val.position = val.position ? val.position : POSITION_BOTTON;
+                this.custom(configureType('info', val));
+            },
+
+            loading        = function (val) {
+                val = normalizeTitle(val);
+                val.position = val.position ? val.position : POSITION_CENTER;
+                this.custom(configureType('loading', val));
+            },
+
+            custom         = function (properties) {
+
+                if (typeof(properties) !== 'object')
+                    throw new Error('value "' + properties + '" must be a Object!: {title:"' + properties + '"}');
+
                 this
-                    .setTitle(title)
-                    .setSubTitle(msg)
-                    .setIcon(icon)
-                    .setAttached(position)
-                    .setHeaderColor(headerColor)
-                    .setContent(content)
+                    .setTitle(properties.title)
+                    .setSubTitle(properties.msg)
+                    .setIcon(properties.icon)
+                    .setAttached(properties.position)
+                    .setHeaderColor(properties.headerColor)
+                    .setContent(properties.content)
+                    .setFooter(properties.footer)
+
+                    .setEvents(properties.events)
+
                     .show();
             };
 
@@ -150,9 +246,11 @@ var app = app || {};
             custom        : custom,
             setIcon       : setIcon,
             setContent    : setContent,
+            setFooter     : setFooter,
             setTitle      : setTitle,
             setSubTitle   : setSubTitle,
             setAttached   : setAttached,
+            setEvents     : setEvents,
             setHeaderColor: setHeaderColor,
             show          : show
         }

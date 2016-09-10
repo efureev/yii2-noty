@@ -57,20 +57,20 @@ $this->registerJs("
     });
     
     $('#btn-izimodal-custom').on('click',function(e){
-        app.modal.custom('Custom!', 'customizer!');
+        app.modal.custom('Custom!');
     });
     $('#btn-izimodal-success').on('click',function(e){
-        app.modal.success('Succes!', 'You're winner!');
+        app.modal.success('Succes!'');
     });
     
     $('#btn-izimodal-alert').on('click',function(e){
-        app.modal.alert('Alert text', 'Alert');
+        app.modal.alert('Alert text');
     });
 ");
 
 ```
 
-### Example 4
+### Example 4: types options
 ```html
 <button id="btn-izimodal-custom">custom</button>
 <button id="btn-izimodal-alert">Alert</button>
@@ -101,20 +101,93 @@ $this->registerJs("
     });
     
     $('#btn-izimodal-info').on('click',function(e){
-        app.modal.info('Custom!');
+        app.modal.info('Infooo!');
     });
 
     $('#btn-izimodal-custom').on('click',function(e){
-        app.modal.custom('Custom!', 'customizer!');
+        app.modal.custom('Custom!');
     });
     
     $('#btn-izimodal-success').on('click',function(e){
-        app.modal.success('Succes!', 'You\\'re winner!');
+        app.modal.success('Succes!');
     });
     
     $('#btn-izimodal-alert').on('click',function(e){
-        app.modal.alert('Alert text', 'Alert');
+        app.modal.alert('Alert text');
     });
+");
+
+```
+
+## Events
+
+- Opening
+- Opened
+- Closing
+- Closed
+- Fullscreen
+
+### Example 5
+```html
+<button id="btn-izimodal-custom" title="Title Test">click</button>
+```
+
+```php
+\efureev\iziModal\IziModalWidget::info('app-modal');
+
+$this->registerJs("
+        
+    $('#btn-izimodal-custom').on('click',function(e){
+        var contentModal = $('<div>').css({padding:"20px 30px"}).html('test content');
+        app.modal.custom({
+                title : $(this).attr('title'),
+                content : contentModal,
+                footer : {
+                    border: true,
+                    items : [{
+                        tag    : 'button',
+                        class  : 'btn btn-primary btn-xs',
+                        title  : 'Save',
+                        onClick: function () {
+                            var u = $('#users').val();
+        
+                            $.ajax({
+                                url : '/users',
+                                type: 'POST',
+                                data: {dataUsers: u}
+                            })
+                                .error(function (resp) {
+                                    throw new Error(resp.error);
+                                })
+                                .success(function (resp) {
+                                    if (resp.error)
+                                        throw new Error(resp.error);
+                                    ...
+                                });
+                        }
+                    }, {
+                        tag  : 'button',
+                        class: 'btn btn-primary btn-xs',
+                        title: 'Close',
+                        data : {
+                            'izimodal-close': ''
+                        }
+                    }]
+                },
+                events : {
+                    opening : function (event) {
+                        console.log('opening');
+                    },
+                    closing : function (event) {
+                        console.log('closing');
+                    },
+                    closed : function (event) {
+                        console.log('closed');
+                    }
+                }
+            });
+    });
+    
 ");
 
 ```
