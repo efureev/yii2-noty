@@ -5,13 +5,13 @@ namespace efureev\iziModal;
 class AppModalAsset extends \yii\web\AssetBundle
 {
 
-    public $sourcePath = '@efureev/iziModal/assets';
+    public $sourcePath = '@efureev/noty/assets';
 
     public $js = [
-        'app.modal.js'
+        'app.msg.js'
     ];
 
     public $depends = [
-        'efureev\iziModal\IziModalAsset',
+        'efureev\noty\NotyAsset',
     ];
 }
