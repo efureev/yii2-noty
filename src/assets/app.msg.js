@@ -10,59 +10,87 @@ var app = app || {};
                 return $.extend(true, $.noty.defaults.callback, callbacks);
             },
 
+            cloneObj     = function (obj) {
+                return $.extend(true, {}, obj);
+            },
+
+
             info         = function (msg, callbacks) {
-                var opts = $.extend(true, $.noty.appOptions, {
+                if ($.noty.types.info.icon)
+                    msg = '<i class="' + $.noty.types.info.icon + '"></i> ' + msg;
+
+                var opts = $.extend(true, cloneObj($.noty.appOptions), {
                     text    : msg,
                     type    : 'information',
                     timeout : 2000,
+                    buttons : false,
                     callback: getCallBacks(callbacks)
                 });
                 noty(opts);
             },
 
             alert        = function (msg, callbacks) {
-                var opts = $.extend(true, $.noty.appOptions, {
+                if ($.noty.types.alert.icon)
+                    msg = '<i class="' + $.noty.types.alert.icon + '"></i> ' + msg;
+
+                var opts = $.extend(true, cloneObj($.noty.appOptions), {
                     text    : msg,
                     type    : 'alert',
                     timeout : 2000,
+                    buttons : false,
                     callback: getCallBacks(callbacks)
                 });
                 noty(opts);
             },
 
             success      = function (msg, callbacks) {
-                var opts = $.extend(true, $.noty.appOptions, {
+                if ($.noty.types.success.icon)
+                    msg = '<i class="' + $.noty.types.success.icon + '"></i> ' + msg;
+
+                var opts = $.extend(true, cloneObj($.noty.appOptions), {
                     text    : msg,
                     type    : 'success',
                     timeout : 2000,
+                    buttons : false,
                     callback: getCallBacks(callbacks)
                 });
                 noty(opts);
             },
 
             warning      = function (msg, callbacks) {
-                var opts = $.extend(true, $.noty.appOptions, {
+                if ($.noty.types.warning.icon)
+                    msg = '<i class="' + $.noty.types.warning.icon + '"></i> ' + msg;
+
+                var opts = $.extend(true, cloneObj($.noty.appOptions), {
                     text    : msg,
                     type    : 'warning',
                     timeout : 5000,
+                    buttons : false,
                     callback: getCallBacks(callbacks)
                 });
                 noty(opts);
             },
 
             error        = function (msg, callbacks) {
+                if ($.noty.types.error.icon)
+                    msg = '<i class="' + $.noty.types.error.icon + '"></i> ' + msg;
 
-                var opts = $.extend(true, $.noty.appOptions, {
+                var opts = $.extend(true, cloneObj($.noty.appOptions), {
                     text    : msg,
                     type    : 'error',
                     force   : true,
+                    // buttons : false,
                     callback: getCallBacks(callbacks)
                 });
+
                 noty(opts);
             },
 
             confirm      = function (msg, onOkFn, onCancelFn, callbacks) {
-                var opts = $.extend(true, $.noty.appOptions, {
+                if ($.noty.types.confirm.icon)
+                    msg = '<i class="' + $.noty.types.confirm.icon + '"></i> ' + msg;
+
+                var opts = $.extend(true, cloneObj($.noty.appOptions), {
                     text    : msg,
                     type    : 'confirm',
                     force   : true,
@@ -86,11 +114,17 @@ var app = app || {};
                         }
                     }]
                 });
+
                 noty(opts);
             },
 
             flash        = function (elementId, options) {
-                var opts = $.extend({}, $.noty.appOptions, options);
+                var opts = $.extend(true, cloneObj($.noty.appOptions), options);
+
+                if (opts.icon) {
+                    opts.template = opts.template.replace('{{%icon}}', opts.icon);
+                }
+
                 return noty(opts);
             };
 

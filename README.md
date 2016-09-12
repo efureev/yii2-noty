@@ -33,6 +33,42 @@ ___
 app.msg.alert('Alarma!...');
 ```
 
+- **info** - show the info window
+```javascript
+// @var string|object
+app.msg.info('Alarma!...');
+```
+
+- **error** - show the error window
+```javascript
+// @var string|object
+app.msg.error('Alarma!...');
+```
+
+- **success** - show the success window
+```javascript
+// @var string|object
+app.msg.success('Alarma!...');
+```
+
+- **warning** - show the warning window
+```javascript
+// @var string|object
+app.msg.warning('Alarma!...');
+```
+
+- **confirm** - show the warning window
+```javascript
+// @var string|object
+app.msg.confirm('Alarma!...');
+//@var function onOkFn : function on click Ok
+//@var function onCancelFn : function on click Cancel
+//@var object callbacks : callbacks from noty
+app.msg.confirm('Alarma!...',onOkFn, onCancelFn, callbacks);
+```
+
+(callbacks)[http://ned.im/noty/#/about]
+
 
 ___
 ### Run
@@ -45,7 +81,16 @@ ___
 ```js
 app.msg.error('Alarma!');
 app.msg.success('You are winner!');
+app.msg.success('You are winner!');
 ```
+
+### Example 2: set Flashes
+```php
+app()->session->setFlash('warning', 'Warning.');
+app()->session->setFlash('error', 'Error.');
+app()->session->setFlash('info', 'Joke.');
+```
+
 
 # Tests
 

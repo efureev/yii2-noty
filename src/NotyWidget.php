@@ -4,7 +4,6 @@ namespace efureev\noty;
 
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\helpers\Json;
 
 
@@ -28,23 +27,25 @@ class NotyWidget extends Widget
 
     /** @var array Icons based on type */
     public $icons = [
-        'error' => 'fa fa-times-circle',
-        'success' => 'fa fa-check-circle',
-        'information' => 'fa fa-info-circle',
-        'warning' => 'fa fa-exclamation-circle',
-        'alert' => 'fa fa-bell-o',
+        'error'        => 'fa fa-times-circle',
+        'success'      => 'fa fa-check-circle',
+        'information'  => 'fa fa-info-circle',
+        'warning'      => 'fa fa-exclamation-circle',
+        'alert'        => 'fa fa-bell-o',
         'notification' => 'fa fa-bell-o',
+        'confirm'      => 'fa-question-circle-o',
     ];
 
     /**
      * @var array Alert types
      */
     public $types = [
-        'error' => 'error',
-        'success' => 'success',
+        'error'       => 'error',
+        'success'     => 'success',
         'information' => 'information',
-        'warning' => 'warning',
-        'alert' => 'alert'
+        'warning'     => 'warning',
+        'alert'       => 'alert',
+        'confirm'     => 'confirm'
     ];
 
     public function init()
@@ -55,22 +56,25 @@ class NotyWidget extends Widget
     public function run()
     {
         $opts = ArrayHelper::merge($this->getDefaultOptions(), $this->clientOptions);
+        $availableTypes = $this->getDefaultTypes();
         $this->view->registerJs("$.noty.appOptions = " . Json::encode($opts));
+        $this->view->registerJs("$.noty.types = " . Json::encode($availableTypes));
 
         if ($this->enableSessionFlash && ($flashes = \Yii::$app->session->getAllFlashes())) {
-            $js= [];
-            foreach($flashes as $type => $message) {
+            $js = [];
+            foreach ($flashes as $type => $message) {
                 if (empty($message)) {
                     continue;
                 }
                 $type = $this->verifyType($type);
                 $icon = $this->getIcon($type);
-                $text = is_array($message) ? $icon . implode(' ', $message) : $icon . $message;
-                $js [] = "var {$type} = app.msg.flash('{$this->getId()}');";
-                $js [] = "$.noty.setText({$type}.options.id, '{$text}');";
-                $js [] = "$.noty.setType({$type}.options.id, '{$type}');";
+                $text = is_array($message) ? implode('<br>', $message) : $message;
+                $typeEl = $type . 'Noty';
+                $js [] = "var {$typeEl} = app.msg.flash('{$this->getId()}',{icon:\"{$icon}\"});";
+                $js [] = "$.noty.setText({$typeEl}.options.id, '{$text}');";
+                $js [] = "$.noty.setType({$typeEl}.options.id, '{$type}');";
             }
-            $this->view->registerJs(implode(PHP_EOL,$js));
+            $this->view->registerJs(implode(PHP_EOL, $js));
         }
 
     }
@@ -78,7 +82,7 @@ class NotyWidget extends Widget
     protected function getDefaultOptions()
     {
         return [
-            'template'  => '<div class="noty_message"><i class="noty-icon fa fa-check"></i><span class="noty_text"></span><div class="noty_close"></div></div>',
+            'template'  => '<div class="noty_message"><i class="noty-icon {{%icon}}"></i> <span class="noty_text"></span><div class="noty_close"></div></div>',
             'theme'     => 'bootstrapTheme',
             'layout'    => 'topRight',
             'animation' => [
@@ -102,16 +106,30 @@ class NotyWidget extends Widget
         if (!$this->enableIcon) {
             return '';
         }
-        $class = $this->icons[ $type ];
 
-        return Html::tag('i', '', ['class' => $class]) . ' ';
+        return $class = $this->icons[ $type ];
     }
 
-    protected function verifyType($type) {
+    protected function verifyType($type)
+    {
         if (array_key_exists($type, $this->types)) {
-            return $this->types[$type];
+            return $this->types[ $type ];
         }
+
         return 'notification';
+    }
+
+    protected function getDefaultTypes()
+    {
+        $result = [];
+
+        foreach ($this->types as $type) {
+            $result[ $type ] = [
+                'icon' => $this->icons[ $type ]
+            ];
+        }
+
+        return $result;
     }
 
 }
