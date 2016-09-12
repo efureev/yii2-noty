@@ -37,7 +37,8 @@ class NotyWidget extends Widget
     ];
 
     /** @var array Messages based on type */
-    public $messages = [
+    public $messages = [];
+    public $defaultMessages = [
         'error'        => 'Error',
         'success'      => 'Success',
         'information'  => 'Info',
@@ -132,11 +133,11 @@ class NotyWidget extends Widget
     protected function getDefaultTypes()
     {
         $result = [];
-
+        $messages = ArrayHelper::merge($this->defaultMessages,$this->messages);
         foreach ($this->types as $type) {
             $result[ $type ] = [
                 'icon' => $this->icons[ $type ],
-                'msg' => $this->messages[ $type ]
+                'msg' => $messages[ $type ]
             ];
         }
 
