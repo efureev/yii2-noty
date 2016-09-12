@@ -13,13 +13,13 @@ ___
 
 Either run
 ```
-composer require "efureev/yii2-init: *"
+composer require "efureev/yii2-noty: *"
 ```
 
 or add
 
 ```
-"efureev/yii2-init": "~2",
+"efureev/yii2-noty": "~2",
 ```
 
 to the require section of your composer.json file.
