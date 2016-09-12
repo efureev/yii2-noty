@@ -12,7 +12,8 @@ class NotyAsset extends \yii\web\AssetBundle
     ];
 
     public $depends = [
-        'yii\web\JqueryAsset',
         'efureev\noty\AnimateAsset',
+        'efureev\noty\FontawesomeAsset',
+        'yii\web\JqueryAsset',
     ];
 }

@@ -87,6 +87,11 @@ var app = app || {};
                     }]
                 });
                 noty(opts);
+            },
+
+            flash        = function (elementId, options) {
+                var opts = $.extend({}, $.noty.appOptions, options);
+                return noty(opts);
             };
 
         return {
@@ -95,7 +100,8 @@ var app = app || {};
             info   : info,
             success: success,
             warning: warning,
-            confirm: confirm
+            confirm: confirm,
+            flash  : flash
         }
     })($);
     app.msg = app.msg || $msg;
