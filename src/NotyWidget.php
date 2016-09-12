@@ -36,6 +36,16 @@ class NotyWidget extends Widget
         'confirm'      => 'fa-question-circle-o',
     ];
 
+    /** @var array Messages based on type */
+    public $messages = [
+        'error'        => 'Error',
+        'success'      => 'Success',
+        'information'  => 'Info',
+        'warning'      => 'Warning',
+        'alert'        => 'Alert',
+        'confirm'      => 'Confirm',
+    ];
+
     /**
      * @var array Alert types
      */
@@ -125,7 +135,8 @@ class NotyWidget extends Widget
 
         foreach ($this->types as $type) {
             $result[ $type ] = [
-                'icon' => $this->icons[ $type ]
+                'icon' => $this->icons[ $type ],
+                'msg' => $this->messages[ $type ]
             ];
         }
 

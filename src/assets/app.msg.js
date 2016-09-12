@@ -16,6 +16,9 @@ var app = app || {};
 
 
             info         = function (msg, callbacks) {
+                if (!msg)
+                    msg = $.noty.types.info.msg;
+
                 if ($.noty.types.info.icon)
                     msg = '<i class="' + $.noty.types.info.icon + '"></i> ' + msg;
 
@@ -30,6 +33,9 @@ var app = app || {};
             },
 
             alert        = function (msg, callbacks) {
+                if (!msg)
+                    msg = $.noty.types.alert.msg;
+
                 if ($.noty.types.alert.icon)
                     msg = '<i class="' + $.noty.types.alert.icon + '"></i> ' + msg;
 
@@ -44,6 +50,9 @@ var app = app || {};
             },
 
             success      = function (msg, callbacks) {
+                if (!msg)
+                    msg = $.noty.types.success.msg;
+
                 if ($.noty.types.success.icon)
                     msg = '<i class="' + $.noty.types.success.icon + '"></i> ' + msg;
 
@@ -58,6 +67,9 @@ var app = app || {};
             },
 
             warning      = function (msg, callbacks) {
+                if (!msg)
+                    msg = $.noty.types.warning.msg;
+
                 if ($.noty.types.warning.icon)
                     msg = '<i class="' + $.noty.types.warning.icon + '"></i> ' + msg;
 
@@ -72,6 +84,9 @@ var app = app || {};
             },
 
             error        = function (msg, callbacks) {
+                if (!msg)
+                    msg = $.noty.types.error.msg;
+
                 if ($.noty.types.error.icon)
                     msg = '<i class="' + $.noty.types.error.icon + '"></i> ' + msg;
 
@@ -87,6 +102,9 @@ var app = app || {};
             },
 
             confirm      = function (msg, onOkFn, onCancelFn, callbacks) {
+                if (!msg)
+                    msg = $.noty.types.confirm.msg;
+
                 if ($.noty.types.confirm.icon)
                     msg = '<i class="' + $.noty.types.confirm.icon + '"></i> ' + msg;
 
