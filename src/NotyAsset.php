@@ -8,7 +8,7 @@ class NotyAsset extends \yii\web\AssetBundle
     public $sourcePath = '@bower/noty/js/noty/packaged';
 
     public $js = [
-        'dist/jquery.noty.packaged.min.js'
+        'jquery.noty.packaged.min.js'
     ];
 
     public $depends = [

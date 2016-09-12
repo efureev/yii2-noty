@@ -19,7 +19,7 @@ composer require "efureev/yii2-noty: *"
 or add
 
 ```
-"efureev/yii2-noty": "~2",
+"efureev/yii2-noty": "~1",
 ```
 
 to the require section of your composer.json file.
@@ -39,11 +39,12 @@ ___
 
 ### Example 1
 ```php
-\efureev\noty\NotyWidget::run();
+\efureev\noty\NotyWidget::widget();
 ```
 
 ```js
-app.msg.alert('Alarma!');
+app.msg.error('Alarma!');
+app.msg.success('You are winner!');
 ```
 
 # Tests

@@ -4,7 +4,6 @@ namespace efureev\noty;
 
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\helpers\Json;
 
 /**
@@ -21,12 +20,26 @@ class NotyWidget extends Widget
 
     public function init()
     {
-        NotyAsset::register($this->view);
+        AppMessageAsset::register($this->view);
     }
 
     public function run()
     {
-        $opts = !empty($this->clientOptions) ? Json::encode($this->clientOptions) : "{}";
-        $this->view->registerJs("var notyOpts = ".$opts);
+        $opts = ArrayHelper::merge($this->getDefaultOptions(),$this->clientOptions);
+        $this->view->registerJs("$.noty.appOptions = " . Json::encode($opts));
+    }
+
+    protected function getDefaultOptions()
+    {
+        return [
+            'theme'     => 'bootstrapTheme',
+            'layout'    => 'topRight',
+            'animation' => [
+                'open'   => 'animated bounceInRight',
+                'close'  => 'animated fadeOutUpBig',
+                'easing' => 'swing',
+                'speed'  => 500
+            ],
+        ];
     }
 }

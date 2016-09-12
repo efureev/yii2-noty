@@ -1,8 +1,8 @@
 <?php
 
-namespace efureev\iziModal;
+namespace efureev\noty;
 
-class AppModalAsset extends \yii\web\AssetBundle
+class AppMessageAsset extends \yii\web\AssetBundle
 {
 
     public $sourcePath = '@efureev/noty/assets';
