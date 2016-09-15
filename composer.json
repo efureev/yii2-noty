@@ -1,7 +1,7 @@
 {
   "name": "efureev/yii2-noty",
   "description": "A Yii2 wrapper widget for the Noty, a noty plugin with jQuery.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "keywords": [
     "yii2",
     "widget",

@@ -156,6 +156,7 @@ var app = app || {};
             flash  : flash
         }
     })($);
-    app.msg = app.msg || $msg;
+
+    app.msg = $.extend(true, app.msg || {}, $msg);
     window.app = app;
 })($);
