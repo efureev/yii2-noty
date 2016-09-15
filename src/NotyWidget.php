@@ -127,7 +127,7 @@ class NotyWidget extends Widget
             return $this->types[ $type ];
         }
 
-        return 'notification';
+        return 'info';
     }
 
     protected function getDefaultTypes()
