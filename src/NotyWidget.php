@@ -53,7 +53,7 @@ class NotyWidget extends Widget
     public $types = [
         'error'   => 'error',
         'success' => 'success',
-        'info'    => 'information',
+        'info'    => 'info',
         'warning' => 'warning',
         'alert'   => 'alert',
         'confirm' => 'confirm'
